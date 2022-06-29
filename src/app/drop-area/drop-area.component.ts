@@ -1,5 +1,7 @@
 import { Component, ElementRef, HostListener, OnDestroy, OnInit, Renderer2 } from '@angular/core';
 import { preventStop } from '../../helper/event-handler/prevent-stop';
+import { blob2string } from '../../helper/file-handler/blob2string';
+import { UploadFile } from '../../helper/file/file';
 
 @Component({
   selector: 'app-drop-area',
@@ -38,7 +40,16 @@ export class DropAreaComponent implements OnInit, OnDestroy {
   private drop(event: DragEvent) {
     preventStop(event);
     console.log('drop', event.dataTransfer?.files);
-    this.dragoverListener()
+    if ((event.dataTransfer?.files || []).length > 0) {
+      const files = event.dataTransfer!.files;
+      for (let i = 0; i < files.length; i++) {
+        const file = new UploadFile(files.item(i)!);
+        file.content
+          .then(console.log)
+          .catch(console.error);
+      }
+    }
+    this.dragoverListener();
   }
 
   ngOnDestroy(): void {
