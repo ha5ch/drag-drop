@@ -5,6 +5,7 @@ import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
 import { DropAreaComponent } from './drop-area/drop-area.component';
+import { FileContainerModule } from './file-container/file-container.module';
 
 @NgModule({
   declarations: [
@@ -15,6 +16,7 @@ import { DropAreaComponent } from './drop-area/drop-area.component';
   ],
   imports: [
     BrowserModule,
+    FileContainerModule,
   ],
   providers: [],
   bootstrap: [ AppComponent ],
