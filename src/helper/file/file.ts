@@ -1,33 +1,47 @@
-import { blob2string } from '../file-handler/blob2string';
-
 export interface IFile {
-  get name(): string;
-  get size(): number;
-  get type(): string;
-  get lastModified(): number;
-  get content(): Promise<string>;
+  name: string;
+  size: number;
+  type: string;
+  lastModified: number;
+  content: string;
 }
 
-export class UploadFile implements IFile {
-  constructor(private origin: File) { }
+export abstract class BaseFile implements IFile {
+  protected constructor(
+    protected _name: string,
+    protected _size: number,
+    protected _type: string,
+    protected _lastModified: number,
+    protected _content: string,
+  ) { }
 
-  public get name() {
-    return this.origin.name;
+  get content(): string {
+    return this._content;
   }
 
-  public get size() {
-    return this.origin.size;
+  get lastModified(): number {
+    return this._lastModified;
   }
 
-  public get lastModified() {
-    return this.origin.lastModified;
+  get name(): string {
+    return this._name;
   }
 
-  public get type() {
-    return this.origin.type;
+  get size(): number {
+    return this._size;
   }
 
-  public get content() {
-    return blob2string(this.origin);
+  get type(): string {
+    return this._type;
+  }
+
+  public toJson(): IFile {
+    return {
+      name: this.name,
+      size: this.size,
+      type: this.type,
+      lastModified: this.lastModified,
+      content: this.content,
+    };
   }
 }

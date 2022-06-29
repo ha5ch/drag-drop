@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { DropService } from '../drop-area/drop.service';
-import { UploadFile } from '../../helper/file/file';
+import { IFile } from '../../helper/file/file';
 
 @Component({
   selector: 'app-file-container',
@@ -8,7 +8,7 @@ import { UploadFile } from '../../helper/file/file';
   styleUrls: [ './file-container.component.scss' ],
 })
 export class FileContainerComponent implements OnInit {
-  public file?: UploadFile;
+  public file?: IFile;
 
   constructor(private dropService: DropService) { }
 

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ReplaySubject, Subject } from 'rxjs';
-import { UploadFile } from '../../helper/file/file';
+import { UploadFile } from '../../helper/file/upload.file';
 
 @Injectable({
   providedIn: 'root',
@@ -17,6 +17,6 @@ export class DropService {
   }
 
   public set current(value: UploadFile) {
-    this.subject.next(value);
+    value.loadContent().then(() => this.subject.next(value));
   }
 }
