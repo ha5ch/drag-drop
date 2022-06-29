@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { DropService } from '../drop-area/drop.service';
 import { IFile } from '../../helper/file/file';
 
@@ -8,7 +8,7 @@ import { IFile } from '../../helper/file/file';
   styleUrls: [ './file-container.component.scss' ],
 })
 export class FileContainerComponent implements OnInit {
-  public file?: IFile;
+  @Input() public file?: IFile;
 
   constructor(private dropService: DropService) { }
 
@@ -23,6 +23,8 @@ export class FileContainerComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.dropService.current$.subscribe(file => this.file = file);
+    if (!this.file) {
+      this.dropService.current$.subscribe(file => this.file = file);
+    }
   }
 }

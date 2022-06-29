@@ -2,8 +2,12 @@ import { blob2string } from '../file-handler/blob2string';
 import { BaseFile } from './file';
 
 export class UploadFile extends BaseFile {
-  constructor(private origin: File) {
-    super(origin.name, origin.size, origin.type, origin.lastModified, '');
+  constructor(private _origin: File) {
+    super(_origin.name, _origin.size, _origin.type, _origin.lastModified, '');
+  }
+
+  public get origin(): File {
+    return this._origin;
   }
 
   public async loadContent(): Promise<string> {

@@ -4,4 +4,6 @@
 
 <app-file-container></app-file-container>
 
+<app-file-container *ngFor="let file of storedFiles" [file]="file"></app-file-container>
+
 <app-footer [title]="title"></app-footer>
