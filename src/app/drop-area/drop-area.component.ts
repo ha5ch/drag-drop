@@ -1,6 +1,5 @@
 import { Component, ElementRef, HostListener, OnDestroy, OnInit, Renderer2 } from '@angular/core';
 import { preventStop } from '../../helper/event-handler/prevent-stop';
-import { blob2string } from '../../helper/file-handler/blob2string';
 import { UploadFile } from '../../helper/file/file';
 
 @Component({
@@ -17,8 +16,20 @@ export class DropAreaComponent implements OnInit, OnDestroy {
     private ref: ElementRef,
   ) { }
 
+  public get background() {
+    return this.isDragging ? '#bbb' : '#fff';
+  }
+
+  public get text() {
+    return this.isDragging ? 'drop' : 'drag';
+  }
+
   ngOnInit(): void {
     this.dragoverListener();
+  }
+
+  ngOnDestroy(): void {
+    this.dragoverUnListener();
   }
 
   private dragoverListener() {
@@ -50,17 +61,5 @@ export class DropAreaComponent implements OnInit, OnDestroy {
       }
     }
     this.dragoverListener();
-  }
-
-  ngOnDestroy(): void {
-    this.dragoverUnListener();
-  }
-
-  public get background() {
-    return this.isDragging ? '#bbb' : '#fff';
-  }
-
-  public get text() {
-    return this.isDragging ? 'drop' : 'drag';
   }
 }
