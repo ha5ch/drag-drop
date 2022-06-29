@@ -1,5 +1,5 @@
 <div *ngIf="file" [ngSwitch]="fileType">
-  <app-image-file *ngSwitchCase="'image'"></app-image-file>
-  <app-text-file *ngSwitchCase="'text'"></app-text-file>
-  <app-download-file *ngSwitchDefault></app-download-file>
+  <app-image-file *ngSwitchCase="'image'" [file]="file"></app-image-file>
+  <app-text-file *ngSwitchCase="'text'" [file]="file"></app-text-file>
+  <app-download-file *ngSwitchDefault [file]="file"></app-download-file>
 </div>
