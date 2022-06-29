@@ -1,6 +1,7 @@
 import { Component, ElementRef, HostListener, OnDestroy, OnInit, Renderer2 } from '@angular/core';
 import { preventStop } from '../../helper/event-handler/prevent-stop';
 import { UploadFile } from '../../helper/file/file';
+import { DropService } from './drop.service';
 
 @Component({
   selector: 'app-drop-area',
@@ -14,6 +15,7 @@ export class DropAreaComponent implements OnInit, OnDestroy {
   constructor(
     private renderer: Renderer2,
     private ref: ElementRef,
+    private dropService: DropService,
   ) { }
 
   public get background() {
@@ -55,6 +57,7 @@ export class DropAreaComponent implements OnInit, OnDestroy {
       const files = event.dataTransfer!.files;
       for (let i = 0; i < files.length; i++) {
         const file = new UploadFile(files.item(i)!);
+        this.dropService.current = file;
         file.content
           .then(console.log)
           .catch(console.error);
