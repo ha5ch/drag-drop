@@ -1,1 +1,8 @@
-<p>image-file works with {{file.name}}!</p>
+<div class="card" style="width: 18rem;">
+  <img [src]="file.content" class="card-img-top" [alt]="file.name">
+  <div class="card-body">
+    <h5 class="card-title">{{file.name}}</h5>
+    <p class="card-text">Size: {{file.size}} bytes</p>
+    <p class="card-text">LastModified: {{modifiedDate}}</p>
+  </div>
+</div>
