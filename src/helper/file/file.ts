@@ -1,3 +1,5 @@
+import { string2file } from "../file-handler/string2.blob";
+
 export interface IFile {
   name: string;
   size: number;
@@ -6,7 +8,17 @@ export interface IFile {
   content: string;
 }
 
-export abstract class BaseFile implements IFile {
+export interface IBinaryFile extends IFile {
+  binary: File;
+  isBinary: boolean;
+  isImage: boolean;
+  isText: boolean;
+}
+
+export abstract class BaseFile implements IBinaryFile {
+  private static TYPE_TEXT_REGEX = /text|json|xml/;
+  private static TYPE_IMAGE_REGEX = /image/;
+
   protected constructor(
     protected _name: string,
     protected _size: number,
@@ -33,6 +45,23 @@ export abstract class BaseFile implements IFile {
 
   get type(): string {
     return this._type;
+  }
+
+  get binary(): File {
+    const content = this.isText ? this.content : this.content.split(',')[1];
+    return string2file(content, this.name, this.type);
+  }
+
+  get isBinary(): boolean {
+    return !this.isText && !this.isImage;
+  }
+
+  get isImage(): boolean {
+    return BaseFile.TYPE_IMAGE_REGEX.test(this.type);
+  }
+
+  get isText(): boolean {
+    return BaseFile.TYPE_TEXT_REGEX.test(this.type);
   }
 
   public toJson(): IFile {

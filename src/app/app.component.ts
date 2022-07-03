@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { db } from '../helper/db/db';
-import { IFile } from '../helper/file/file';
+import { IBinaryFile } from '../helper/file/file';
 
 @Component({
   selector: 'app-root',
@@ -10,7 +10,7 @@ import { IFile } from '../helper/file/file';
 export class AppComponent implements OnInit {
   title = 'drag-drop';
 
-  public storedFiles: IFile[] = [];
+  public storedFiles: IBinaryFile[] = [];
 
   ngOnInit(): void {
     db.getFiles()
