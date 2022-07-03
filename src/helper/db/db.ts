@@ -63,6 +63,11 @@ export class AppDB extends Dexie {
     const deleted = await this.files.where('name').equals(file.name).delete();
     return deleted > 0;
   }
+
+  public async deleteDirectory(dir: Directory): Promise<boolean> {
+    const deleted = await this.directories.where('name').equals(dir.name).delete();
+    return deleted > 0;
+  }
 }
 
 export const db = new AppDB();

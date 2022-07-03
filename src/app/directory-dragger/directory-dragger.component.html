@@ -3,5 +3,5 @@
     <button class="btn btn-info" type="button" (click)="add()">+</button>
   </div>
 
-  <app-directory *ngFor="let dir of directories" [dir]="dir"></app-directory>
+  <app-directory *ngFor="let dir of directories" [dir]="dir" (dirDeleted)="delete(dir)"></app-directory>
 </main>

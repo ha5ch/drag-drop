@@ -1,4 +1,4 @@
-import { Component, HostListener, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, HostListener, Input, OnInit, Output } from '@angular/core';
 import { Directory } from 'src/helper/directory/directory';
 import { preventStop } from '../../../helper/event-handler/prevent-stop';
 import { UploadFile } from '../../../helper/file/upload.file';
@@ -13,8 +13,11 @@ export class DirectoryComponent implements OnInit {
   public isDragging: boolean = false;
 
   @Input() dir!: Directory;
+  @Output() dirDeleted: EventEmitter<Directory>;
 
-  constructor() { }
+  constructor() {
+    this.dirDeleted = new EventEmitter<Directory>();
+  }
 
   ngOnInit(): void { }
 
@@ -52,5 +55,9 @@ export class DirectoryComponent implements OnInit {
 
   deleteFile(file: IBinaryFile) {
     this.dir.deleteFile(file);
+  }
+
+  deleteSelf(dir: Directory) {
+    this.dirDeleted.emit(dir);
   }
 }

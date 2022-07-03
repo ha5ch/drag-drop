@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { Directory, IDirectory } from 'src/helper/directory/directory';
+import { Directory } from 'src/helper/directory/directory';
 import { db } from '../../helper/db/db';
 
 @Component({
   selector: 'app-directory-dragger',
   templateUrl: './directory-dragger.component.html',
-  styleUrls: ['./directory-dragger.component.scss']
+  styleUrls: [ './directory-dragger.component.scss' ],
 })
 export class DirectoryDraggerComponent implements OnInit {
   public directories: Directory[] = [];
@@ -22,6 +22,23 @@ export class DirectoryDraggerComponent implements OnInit {
       .catch(console.error);
   }
 
+  add() {
+    const name = prompt('Add Directory');
+    if (name && name.trim().length > 0) {
+      const dir = new Directory(name, [], []);
+      this.addDirectory(dir);
+    }
+  }
+
+  delete(dir: Directory) {
+    db.deleteDirectory(dir)
+      .then((isDeleted: boolean) => {
+        if (isDeleted) {
+          this.directories = this.directories.filter(d => d.name !== dir.name);
+        }
+      });
+  }
+
   private addDirectory(directory: Directory): void {
     if (this.directories.find(d => d.name === directory.name) === undefined) {
       this.directories.push(directory);
@@ -31,14 +48,6 @@ export class DirectoryDraggerComponent implements OnInit {
         return 0;
       });
       directory.save();
-    }
-  }
-
-  add() {
-    const name = prompt("Add Directory");
-    if (name && name.trim().length > 0) {
-      const dir = new Directory(name, [], []);
-      this.addDirectory(dir);
     }
   }
 }
