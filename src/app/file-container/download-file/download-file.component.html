@@ -1,6 +1,7 @@
 <div class="card" style="width: 18rem;">
   <div class="card-body">
     <h5 class="card-title">{{file.name}}</h5>
+    <ng-content></ng-content>
     <p class="card-text">Size: {{file.size}} bytes</p>
     <p class="card-text">LastModified: {{modifiedDate}}</p>
     <p class="card-text">Type: {{file.type}}</p>

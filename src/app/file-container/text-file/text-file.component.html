@@ -1,6 +1,3 @@
-<div class="card" style="width: 18rem;">
-  <div class="card-body">
-    <h5 class="card-title">{{file.name}}</h5>
-    <p class="card-text">{{file.content}}</p>
-  </div>
-</div>
+<app-download-file [file]="file">
+  <pre class="card-text">{{file.content}}</pre>
+</app-download-file>
