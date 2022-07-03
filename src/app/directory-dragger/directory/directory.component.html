@@ -3,7 +3,7 @@
     <i class="bi bi-folder mx-2"></i>
     <h6>{{dir.name}}</h6>
   </div>
-  <div class="card-body d-flex">
-    <app-file-container *ngFor="let file of dir.files" [file]="file" (deleted)="deleteFile(file)"></app-file-container>
+  <div class="card-body d-flex flex-wrap justify-content-start">
+    <app-file-container *ngFor="let file of dir.files" [file]="file" (deleted)="deleteFile(file)" class="m-1"></app-file-container>
   </div>
 </div>
