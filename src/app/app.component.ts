@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { db } from '../helper/db/db';
 import { IBinaryFile } from '../helper/file/file';
+import { DropService } from './drop-area/drop.service';
 
 @Component({
   selector: 'app-root',
@@ -12,7 +13,10 @@ export class AppComponent implements OnInit {
 
   public storedFiles: IBinaryFile[] = [];
 
+  constructor(private dropService: DropService) { }
+
   ngOnInit(): void {
+    this.dropService.current$.subscribe(file => (this.storedFiles = [ file, ...this.storedFiles ]));
     db.getFiles()
       .then(async files => {
         return Promise.all(files.map(async file => {

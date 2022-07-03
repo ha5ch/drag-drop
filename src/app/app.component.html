@@ -5,8 +5,6 @@
   <app-drop-area class="m-5 d-block"></app-drop-area>
 
   <main class="d-flex mx-3 justify-content-start flex-wrap">
-    <app-file-container class="m-3"></app-file-container>
-
     <app-file-container class="m-3" *ngFor="let file of storedFiles" [file]="file"></app-file-container>
   </main>
 

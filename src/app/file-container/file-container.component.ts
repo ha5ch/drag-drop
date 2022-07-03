@@ -10,7 +10,7 @@ import { IBinaryFile } from '../../helper/file/file';
 export class FileContainerComponent implements OnInit {
   @Input() public file?: IBinaryFile;
 
-  constructor(private dropService: DropService) { }
+  constructor() { }
 
   get fileType() {
     if (this.file?.isText) {
@@ -22,9 +22,5 @@ export class FileContainerComponent implements OnInit {
     return 'download';
   }
 
-  ngOnInit(): void {
-    if (!this.file) {
-      this.dropService.current$.subscribe(file => this.file = file);
-    }
-  }
+  ngOnInit(): void { }
 }
