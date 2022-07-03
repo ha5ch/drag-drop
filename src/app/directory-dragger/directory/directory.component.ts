@@ -35,7 +35,8 @@ export class DirectoryComponent implements OnInit {
     if ((event.dataTransfer?.files || []).length > 0) {
       const files = event.dataTransfer!.files;
       for (let i = 0; i < files.length; i++) {
-        this.dir.files.push(new UploadFile(files.item(i)!));
+        const file = new UploadFile(files.item(i)!);
+        file.loadContent().then(_ => this.dir.files.push(file));
       }
     }
     this.isDragging = false;

@@ -3,7 +3,7 @@
     <i class="bi bi-folder mx-2"></i>
     <h6>{{dir.name}}</h6>
   </div>
-  <div class="card-body">
-    <p *ngFor="let file of dir.files">{{file.name}}</p>
+  <div class="card-body d-flex">
+    <app-file-container *ngFor="let file of dir.files" [file]="file"></app-file-container>
   </div>
 </div>

@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { DirectoryDraggerComponent } from './directory-dragger.component';
 import { DirectoryComponent } from './directory/directory.component';
+import { FileContainerModule } from '../file-dragger/file-container/file-container.module';
 
 
 @NgModule({
@@ -12,6 +13,7 @@ import { DirectoryComponent } from './directory/directory.component';
   ],
   imports: [
     CommonModule,
+    FileContainerModule,
   ],
   exports: [
     DirectoryDraggerComponent,
