@@ -8,7 +8,7 @@ import { db } from '../../helper/db/db';
   styleUrls: ['./directory-dragger.component.scss']
 })
 export class DirectoryDraggerComponent implements OnInit {
-  public directories: IDirectory[] = [];
+  public directories: Directory[] = [];
 
   constructor() { }
 
@@ -22,7 +22,7 @@ export class DirectoryDraggerComponent implements OnInit {
       .catch(console.error);
   }
 
-  private addDirectory(directory: IDirectory): void {
+  private addDirectory(directory: Directory): void {
     if (this.directories.find(d => d.name === directory.name) === undefined) {
       this.directories.push(directory);
       this.directories.sort((a, b) => {
@@ -30,6 +30,7 @@ export class DirectoryDraggerComponent implements OnInit {
         if (a.name > b.name) { return 1; }
         return 0;
       });
+      directory.save();
     }
   }
 
@@ -37,7 +38,6 @@ export class DirectoryDraggerComponent implements OnInit {
     const name = prompt("Add Directory");
     if (name && name.trim().length > 0) {
       const dir = new Directory(name, [], []);
-      dir.save()
       this.addDirectory(dir);
     }
   }

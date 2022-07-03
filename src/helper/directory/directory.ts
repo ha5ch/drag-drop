@@ -1,5 +1,5 @@
-import { db, DbDirectory } from "../db/db";
-import { IBinaryFile } from "../file/file";
+import { db, DbDirectory } from '../db/db';
+import { IBinaryFile } from '../file/file';
 
 export interface IDirectory {
   name: string;
@@ -8,8 +8,6 @@ export interface IDirectory {
 }
 
 export class Directory implements IDirectory {
-  private _parent: IDirectory;
-
   constructor(
     private _name: string,
     private _files: IBinaryFile[] = [],
@@ -18,6 +16,16 @@ export class Directory implements IDirectory {
   ) {
     this._parent = parent || this;
     this._subDirectories = this._subDirectories.map<Directory>(sub => new Directory(sub.name, sub.files, sub.subDirectories, this));
+  }
+
+  private _parent: IDirectory;
+
+  public get parent(): IDirectory {
+    return this._parent;
+  }
+
+  public set parent(parent: IDirectory) {
+    this._parent = parent;
   }
 
   public get name(): string {
@@ -32,14 +40,6 @@ export class Directory implements IDirectory {
     return this._subDirectories;
   }
 
-  public set parent(parent: IDirectory) {
-    this._parent = parent;
-  }
-
-  public get parent(): IDirectory {
-    return this._parent;
-  }
-
   public toJson(): IDirectory {
     return {
       name: this.name,
@@ -48,20 +48,12 @@ export class Directory implements IDirectory {
     };
   }
 
-  private toDb(): DbDirectory {
-    return {
-      name: this.name,
-      files: this.files.map<File>(f => f.binary),
-      subDirectories: (this.subDirectories as Directory[]).map<DbDirectory>((sub: Directory) => sub.toDb()),
-    }
-  }
-
   public addFile(file: IBinaryFile): void {
-    if (this.files.find(f => f.name !== file.name)) {
+    if (this.files.find(f => f.name === file.name) === undefined) {
       this.files.push(file);
       this.files.sort((a: IBinaryFile, b: IBinaryFile) => {
-        if (a.name > b.name) { return -1 };
-        if (b.name < a.name) { return 1 };
+        if (a.name > b.name) { return -1; }
+        if (b.name < a.name) { return 1; }
         return 0;
       });
       this.save();
@@ -69,6 +61,14 @@ export class Directory implements IDirectory {
   }
 
   public save() {
-    db.saveDirectory(this.toDb())
+    db.saveDirectory(this.toDb());
+  }
+
+  private toDb(): DbDirectory {
+    return {
+      name: this.name,
+      files: this.files.map<File>(f => f.binary),
+      subDirectories: (this.subDirectories as Directory[]).map<DbDirectory>((sub: Directory) => sub.toDb()),
+    };
   }
 }

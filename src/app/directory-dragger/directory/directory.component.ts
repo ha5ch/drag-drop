@@ -1,17 +1,17 @@
 import { Component, HostListener, Input, OnInit } from '@angular/core';
-import { IDirectory } from 'src/helper/directory/directory';
+import { Directory } from 'src/helper/directory/directory';
 import { preventStop } from '../../../helper/event-handler/prevent-stop';
 import { UploadFile } from '../../../helper/file/upload.file';
 
 @Component({
   selector: 'app-directory',
   templateUrl: './directory.component.html',
-  styleUrls: ['./directory.component.scss']
+  styleUrls: [ './directory.component.scss' ],
 })
 export class DirectoryComponent implements OnInit {
   public isDragging: boolean = false;
 
-  @Input() dir!: IDirectory;
+  @Input() dir!: Directory;
 
   constructor() { }
 
@@ -36,7 +36,9 @@ export class DirectoryComponent implements OnInit {
       const files = event.dataTransfer!.files;
       for (let i = 0; i < files.length; i++) {
         const file = new UploadFile(files.item(i)!);
-        file.loadContent().then(_ => this.dir.files.push(file));
+        file.loadContent().then(_ => this.dir.addFile(file))
+          .then(_ => console.log(this.dir))
+          .catch(console.error);
       }
     }
     this.isDragging = false;
