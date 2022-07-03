@@ -28,9 +28,9 @@ export class AppDB extends Dexie {
     return files.map(file => new UploadFile(file));
   }
 
-  public async deleteFile(file: IFile): Promise<void> {
+  public async deleteFile(file: IFile): Promise<boolean> {
     const deleted = await this.files.where('name').equals(file.name).delete();
-    console.log(deleted);
+    return deleted > 0;
   }
 }
 
