@@ -16,7 +16,7 @@ export class AppComponent implements OnInit {
   constructor(private dropService: DropService) { }
 
   ngOnInit(): void {
-    this.dropService.current$.subscribe(file => (this.storedFiles = [ file, ...this.storedFiles ]));
+    this.dropService.current$.subscribe(file => (this.storedFiles = [file, ...this.storedFiles]));
     db.getFiles()
       .then(async files => {
         return Promise.all(files.map(async file => {
@@ -26,5 +26,11 @@ export class AppComponent implements OnInit {
       })
       .then(files => this.storedFiles = files)
       .then(_ => console.log(this.storedFiles));
+  }
+
+  public delete(file: IBinaryFile): void {
+    db.deleteFile(file)
+      .then(isDeleted => { if (isDeleted) { this.storedFiles = this.storedFiles.filter(f => f.name !== file.name); } })
+      .catch(console.error);
   }
 }

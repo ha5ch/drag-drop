@@ -5,7 +5,8 @@
   <app-drop-area class="m-5 d-block"></app-drop-area>
 
   <main class="d-flex mx-3 justify-content-start flex-wrap">
-    <app-file-container class="m-3" *ngFor="let file of storedFiles" [file]="file"></app-file-container>
+    <app-file-container *ngFor="let file of storedFiles" class="m-3" [file]="file" (deleted)="delete($event)">
+    </app-file-container>
   </main>
 
   <app-footer [title]="title"></app-footer>

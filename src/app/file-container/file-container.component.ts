@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { DropService } from '../drop-area/drop.service';
 import { IBinaryFile } from '../../helper/file/file';
 
@@ -8,9 +8,12 @@ import { IBinaryFile } from '../../helper/file/file';
   styleUrls: [ './file-container.component.scss' ],
 })
 export class FileContainerComponent implements OnInit {
-  @Input() public file?: IBinaryFile;
+  @Input() public file!: IBinaryFile;
+  @Output() deleted: EventEmitter<IBinaryFile>;
 
-  constructor() { }
+  constructor() {
+    this.deleted = new EventEmitter();
+  }
 
   get fileType() {
     if (this.file?.isText) {
@@ -23,4 +26,9 @@ export class FileContainerComponent implements OnInit {
   }
 
   ngOnInit(): void { }
+
+
+  delete() {
+    this.deleted.emit(this.file);
+  }
 }
