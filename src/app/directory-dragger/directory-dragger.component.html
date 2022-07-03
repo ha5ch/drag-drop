@@ -1,1 +1,7 @@
-<p>directory dragger works!</p>
+<main>
+  <div class="d-grid grap-2">
+    <button class="btn btn-info" type="button" (click)="add()">+</button>
+  </div>
+
+  <app-directory *ngFor="let dir of directories" [dir]="dir"></app-directory>
+</main>
