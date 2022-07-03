@@ -51,9 +51,9 @@ export class Directory implements IDirectory {
   public addFile(file: IBinaryFile): void {
     if (this.files.find(f => f.name === file.name) === undefined) {
       this.files.push(file);
-      this.files.sort((a: IBinaryFile, b: IBinaryFile) => {
-        if (a.name > b.name) { return -1; }
-        if (b.name < a.name) { return 1; }
+      this._files = this.files.sort((a: IBinaryFile, b: IBinaryFile) => {
+        if (a.name < b.name) { return -1; }
+        if (b.name > a.name) { return 1; }
         return 0;
       });
       this.save();
