@@ -13,7 +13,7 @@ export class UploadFile extends BaseFile {
   public async loadContent(): Promise<string> {
     if (!this.content) {
       console.log(this.name, 'is loading');
-      const type = this.origin.type.match(/text/) ? 'Text' : 'DataURL';
+      const type = this.isText ? 'Text' : 'DataURL';
       await blob2string(this.origin, type)
         .then(value => {
           this._content = value;

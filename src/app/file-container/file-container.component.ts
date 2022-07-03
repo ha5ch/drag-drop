@@ -13,7 +13,7 @@ export class FileContainerComponent implements OnInit {
   constructor(private dropService: DropService) { }
 
   get fileType() {
-    if (this.file?.type.match(/text/)) {
+    if (this.file?.isText) {
       return 'text';
     }
     if (this.file?.type.match(/image/)) {
