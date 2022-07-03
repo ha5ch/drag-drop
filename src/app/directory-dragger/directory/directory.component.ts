@@ -37,6 +37,11 @@ export class DirectoryComponent implements OnInit {
       const files = event.dataTransfer!.files;
       for (let i = 0; i < files.length; i++) {
         const file = new UploadFile(files.item(i)!);
+        if (this.dir.files.find(f => f.name === file.name) !== undefined) {
+          const override = confirm("File already exists, do you want to override it?");
+          if (!override) { return; }
+          this.dir.deleteFile(file);
+        }
         file.loadContent().then(_ => this.dir.addFile(file))
           .then(_ => console.log(this.dir))
           .catch(console.error);
