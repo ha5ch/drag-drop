@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { DropService } from '../drop-area/drop.service';
-import { IBinaryFile } from '../../helper/file/file';
+import { IBinaryFile } from '../../../helper/file/file';
 
 @Component({
   selector: 'app-file-container',

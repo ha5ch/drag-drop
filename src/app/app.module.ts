@@ -4,21 +4,20 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
-import { DropAreaComponent } from './drop-area/drop-area.component';
-import { FileContainerModule } from './file-container/file-container.module';
+import { FileDraggerModule } from './file-dragger/file-dragger.module';
+
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
     FooterComponent,
-    DropAreaComponent,
   ],
   imports: [
     BrowserModule,
-    FileContainerModule,
+    FileDraggerModule,
   ],
   providers: [],
-  bootstrap: [ AppComponent ],
+  bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule { }
