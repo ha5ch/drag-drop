@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Directory, IDirectory } from 'src/helper/directory/directory';
+import { db } from '../../helper/db/db';
 
 @Component({
   selector: 'app-directory-dragger',
@@ -11,17 +12,33 @@ export class DirectoryDraggerComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit(): void { }
+  ngOnInit(): void {
+    db.getDirectories().then(dirs => {
+      dirs.forEach(dir => {
+        this.addDirectory(dir);
+      });
+    })
+      .then(_ => console.log(this.directories))
+      .catch(console.error);
+  }
 
-  add() {
-    const name = prompt("test");
-    if (name && name.trim().length > 0 && !this.directories.find(d => d.name === name)) {
-      this.directories.push(new Directory(name, [], []));
+  private addDirectory(directory: IDirectory): void {
+    if (this.directories.find(d => d.name === directory.name) === undefined) {
+      this.directories.push(directory);
       this.directories.sort((a, b) => {
         if (a.name < b.name) { return -1; }
         if (a.name > b.name) { return 1; }
         return 0;
       });
+    }
+  }
+
+  add() {
+    const name = prompt("Add Directory");
+    if (name && name.trim().length > 0) {
+      const dir = new Directory(name, [], []);
+      dir.save()
+      this.addDirectory(dir);
     }
   }
 }
