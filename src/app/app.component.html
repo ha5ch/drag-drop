@@ -1,9 +1,15 @@
-<app-header [title]="title"></app-header>
+<div class="container-fluid h-100 ">
 
-<app-drop-area class="m-5 d-block"></app-drop-area>
+  <app-header [title]="title"></app-header>
 
-<app-file-container></app-file-container>
+  <app-drop-area class="m-5 d-block"></app-drop-area>
 
-<app-file-container *ngFor="let file of storedFiles" [file]="file"></app-file-container>
+  <main class="d-flex mx-3 justify-content-start flex-wrap">
+    <app-file-container class="m-3"></app-file-container>
 
-<app-footer [title]="title"></app-footer>
+    <app-file-container class="m-3" *ngFor="let file of storedFiles" [file]="file"></app-file-container>
+  </main>
+
+  <app-footer [title]="title"></app-footer>
+
+</div>
