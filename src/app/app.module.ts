@@ -7,12 +7,12 @@ import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
 import { FileDraggerModule } from './file-dragger/file-dragger.module';
 import { FileDraggerComponent } from './file-dragger/file-dragger.component';
-import { DirectoryComponent } from './directory/directory.component';
-import { DirectoryModule } from './directory/directory.module';
+import { DirectoryDraggerComponent } from './directory-dragger/directory-dragger.component';
+import { DirectoryDraggerModule } from './directory-dragger/directory-dragger.module';
 
 const routes: Routes = [
   { path: 'files', component: FileDraggerComponent },
-  { path: 'dirs', component: DirectoryComponent },
+  { path: 'dirs', component: DirectoryDraggerComponent },
   { path: '', redirectTo: '/files', pathMatch: 'full' },
 ];
 
@@ -24,7 +24,7 @@ const routes: Routes = [
   ],
   imports: [
     BrowserModule,
-    DirectoryModule,
+    DirectoryDraggerModule,
     FileDraggerModule,
     RouterModule.forRoot(routes),
   ],

@@ -1,18 +1,18 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { DirectoryComponent } from './directory.component';
+import { DirectoryDraggerComponent } from './directory-dragger.component';
 
 
 @NgModule({
   declarations: [
-    DirectoryComponent,
+    DirectoryDraggerComponent,
   ],
   imports: [
     CommonModule,
   ],
   exports: [
-    DirectoryComponent,
+    DirectoryDraggerComponent,
   ]
 })
-export class DirectoryModule { }
+export class DirectoryDraggerModule { }

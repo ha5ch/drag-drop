@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { DirectoryComponent } from './directory.component';
+import { DirectoryDraggerComponent } from './directory-dragger.component';
 
 describe('DirectoryComponent', () => {
-  let component: DirectoryComponent;
-  let fixture: ComponentFixture<DirectoryComponent>;
+  let component: DirectoryDraggerComponent;
+  let fixture: ComponentFixture<DirectoryDraggerComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ DirectoryComponent ]
+      declarations: [ DirectoryDraggerComponent ]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(DirectoryComponent);
+    fixture = TestBed.createComponent(DirectoryDraggerComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
