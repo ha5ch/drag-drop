@@ -60,6 +60,11 @@ export class Directory implements IDirectory {
     }
   }
 
+  public deleteFile(file: IBinaryFile): void {
+    this._files = this.files.filter(f => f.name !== file.name);
+    this.save();
+  }
+
   public save() {
     db.saveDirectory(this.toDb());
   }

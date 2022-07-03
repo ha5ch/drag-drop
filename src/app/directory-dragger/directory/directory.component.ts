@@ -2,6 +2,7 @@ import { Component, HostListener, Input, OnInit } from '@angular/core';
 import { Directory } from 'src/helper/directory/directory';
 import { preventStop } from '../../../helper/event-handler/prevent-stop';
 import { UploadFile } from '../../../helper/file/upload.file';
+import { IBinaryFile } from '../../../helper/file/file';
 
 @Component({
   selector: 'app-directory',
@@ -42,5 +43,9 @@ export class DirectoryComponent implements OnInit {
       }
     }
     this.isDragging = false;
+  }
+
+  deleteFile(file: IBinaryFile) {
+    this.dir.deleteFile(file);
   }
 }
