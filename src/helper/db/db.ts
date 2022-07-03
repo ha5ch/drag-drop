@@ -1,17 +1,48 @@
 import Dexie, { Table } from 'dexie';
 import { UploadFile } from '../file/upload.file';
 import { IFile } from '../file/file';
+import { Directory } from '../directory/directory';
 
-export interface DbFile extends File {}
+export interface DbFile extends File { }
+export interface DbDirectory {
+  name: string;
+  files: DbFile[];
+  subDirectories: DbDirectory[];
+}
 
 export class AppDB extends Dexie {
   files!: Table<DbFile, string>;
+  directories!: Table<DbDirectory, string>;
 
   constructor() {
     super('drag-drop');
-    this.version(1).stores({
+    this.version(2).stores({
       files: 'name',
+      directories: 'name',
     });
+  }
+
+  public saveDirectory(directory: DbDirectory): void {
+    this.directories.put(directory);
+  }
+
+  public async getDirectories(): Promise<Directory[]> {
+    const convertFile = async (file: File): Promise<UploadFile> => {
+      const f = new UploadFile(file);
+      await f.loadContent();
+      return f;
+    }
+
+    const dbDirs: DbDirectory[] = await this.directories.toArray();
+    const dirs = await Promise.all(dbDirs.map(async function convertDir(dbDir): Promise<Directory> {
+      return new Directory(
+        dbDir.name,
+        await Promise.all(dbDir.files.map(convertFile)),
+        await Promise.all(dbDir.subDirectories.map(convertDir)),
+      );
+    }));
+
+    return dirs;
   }
 
   public saveFile(file: File): void {

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Directory, IDirectory } from 'src/helper/directory/directory';
 
 @Component({
   selector: 'app-directory-dragger',
@@ -6,7 +7,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./directory-dragger.component.scss']
 })
 export class DirectoryDraggerComponent implements OnInit {
-  public directories: string[] = [];
+  public directories: IDirectory[] = [];
 
   constructor() { }
 
@@ -14,8 +15,13 @@ export class DirectoryDraggerComponent implements OnInit {
 
   add() {
     const name = prompt("test");
-    if (name && name.trim().length > 0 && !this.directories.find(d => d === name)) {
-      this.directories.push(name);
+    if (name && name.trim().length > 0 && !this.directories.find(d => d.name === name)) {
+      this.directories.push(new Directory(name, [], []));
+      this.directories.sort((a, b) => {
+        if (a.name < b.name) { return -1; }
+        if (a.name > b.name) { return 1; }
+        return 0;
+      });
     }
   }
 }
