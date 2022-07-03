@@ -22,12 +22,8 @@ export class DirectoryDraggerComponent implements OnInit {
       .catch(console.error);
   }
 
-  add() {
-    const name = prompt('Add Directory');
-    if (name && name.trim().length > 0) {
-      const dir = new Directory(name, [], []);
-      this.addDirectory(dir);
-    }
+  add(dir: Directory) {
+    this.addDirectory(dir);
   }
 
   delete(dir: Directory) {

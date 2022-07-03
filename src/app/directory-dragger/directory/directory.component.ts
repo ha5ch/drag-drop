@@ -60,4 +60,8 @@ export class DirectoryComponent implements OnInit {
   deleteSelf(dir: Directory) {
     this.dirDeleted.emit(dir);
   }
+
+  addDirectory(dir: Directory) {
+    console.log("add new", dir);
+  }
 }
