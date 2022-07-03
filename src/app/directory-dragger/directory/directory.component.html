@@ -1,1 +1,9 @@
-<p>{{dir.name}}</p>
+<div class="card my-2" [ngClass]="{dragging: isDragging}">
+  <div class="card-header d-inline-flex">
+    <i class="bi bi-folder mx-2"></i>
+    <h6>{{dir.name}}</h6>
+  </div>
+  <div class="card-body">
+    <p *ngFor="let file of dir.files">{{file.name}}</p>
+  </div>
+</div>
