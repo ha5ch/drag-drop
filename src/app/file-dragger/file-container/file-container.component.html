@@ -1,4 +1,5 @@
-<div *ngIf="file" [ngSwitch]="fileType">
+<div *ngIf="file" [ngSwitch]="fileType" class="position-relative">
+  <button class="btn delete position-absolute" (click)="delete()">X</button>
   <app-image-file *ngSwitchCase="'image'" [file]="file"></app-image-file>
   <app-text-file *ngSwitchCase="'text'" [file]="file"></app-text-file>
   <app-download-file *ngSwitchDefault [file]="file"></app-download-file>

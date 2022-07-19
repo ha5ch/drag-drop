@@ -1,6 +1,6 @@
 import { Component, HostListener, OnInit } from '@angular/core';
-import { preventStop } from '../../helper/event-handler/prevent-stop';
-import { UploadFile } from '../../helper/file/upload.file';
+import { preventStop } from '../../../helper/event-handler/prevent-stop';
+import { UploadFile } from '../../../helper/file/upload.file';
 import { DropService } from './drop.service';
 
 @Component({

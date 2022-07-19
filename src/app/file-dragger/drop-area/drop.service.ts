@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ReplaySubject, Subject } from 'rxjs';
-import { UploadFile } from '../../helper/file/upload.file';
-import { db } from '../../helper/db/db';
+import { UploadFile } from '../../../helper/file/upload.file';
+import { db } from '../../../helper/db/db';
 
 @Injectable({
   providedIn: 'root',
