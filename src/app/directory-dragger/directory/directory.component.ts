@@ -3,6 +3,7 @@ import { Directory } from 'src/helper/directory/directory';
 import { preventStop } from '../../../helper/event-handler/prevent-stop';
 import { UploadFile } from '../../../helper/file/upload.file';
 import { IBinaryFile } from '../../../helper/file/file';
+import * as JSZip from 'jszip';
 
 @Component({
   selector: 'app-directory',
@@ -42,6 +43,48 @@ export class DirectoryComponent implements OnInit {
 
   deleteDir(dir: Directory) {
     this.dir.deleteSubDirectory(dir);
+  }
+
+  download(dir: Directory) {
+    const zip = new JSZip();
+
+    function addFile(file: IBinaryFile) {
+      if (file.isText) {
+        zip.file(file.name, file.content);
+      }
+      if (file.isBinary) {
+        zip.file(file.name, file.binary, { binary: file.isBinary });
+      }
+      if (file.isImage) {
+        zip.file(file.name, file.content.split(',')[1], { base64: true });
+      }
+    }
+
+    dir.files.forEach(addFile);
+    dir.subDirectories.forEach(function addSub(sub) {
+      // TODO: Refactor! Only works for 1 layer of directories!!
+      zip.folder(sub.name);
+      sub.subDirectories.forEach(addSub);
+      sub.files.map(f => {
+        return {
+          name: `${sub.name}/${f.name}`,
+          binary: f.binary,
+          content: f.content,
+          isBinary: f.isBinary,
+          isImage: f.isImage,
+          isText: f.isText,
+        } as IBinaryFile;
+      }).forEach(addFile);
+    });
+    zip.generateAsync({ type: 'blob' })
+      .then(blob => {
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        a.download = dir.name + '.zip';
+        a.click();
+        URL.revokeObjectURL(a.href);
+        a.remove();
+      });
   }
 
   @HostListener('dragover', [ '$event' ])
