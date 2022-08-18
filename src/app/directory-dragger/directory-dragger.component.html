@@ -1,6 +1,6 @@
 <main>
   <div class="d-grid grap-2">
-    <app-add-directory (click)="add($event)" class="btn btn-info" type="button"></app-add-directory>
+    <app-add-directory (added)="add($event)" class="btn btn-info" type="button"></app-add-directory>
   </div>
 
   <app-directory *ngFor="let dir of directories" [dir]="dir" (dirDeleted)="delete(dir)"></app-directory>

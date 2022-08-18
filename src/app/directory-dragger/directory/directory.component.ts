@@ -19,7 +19,30 @@ export class DirectoryComponent implements OnInit {
     this.dirDeleted = new EventEmitter<Directory>();
   }
 
+  get subDirectories(): Directory[] {
+    return this.dir.subDirectories as Directory[];
+  }
+
   ngOnInit(): void { }
+
+  deleteFile(file: IBinaryFile) {
+    this.dir.deleteFile(file);
+  }
+
+  deleteSelf(dir: Directory) {
+    this.dirDeleted.emit(dir);
+  }
+
+  addDirectory(dir: Directory) {
+    console.log('add new', dir);
+    if (this.dir.subDirectories.find(d => d.name === dir.name) === undefined) {
+      this.dir.addDirectory(dir);
+    }
+  }
+
+  deleteDir(dir: Directory) {
+    this.dir.deleteSubDirectory(dir);
+  }
 
   @HostListener('dragover', [ '$event' ])
   private dragover(event: DragEvent) {
@@ -41,7 +64,7 @@ export class DirectoryComponent implements OnInit {
       for (let i = 0; i < files.length; i++) {
         const file = new UploadFile(files.item(i)!);
         if (this.dir.files.find(f => f.name === file.name) !== undefined) {
-          const override = confirm("File already exists, do you want to override it?");
+          const override = confirm('File already exists, do you want to override it?');
           if (!override) { return; }
           this.dir.deleteFile(file);
         }
@@ -51,17 +74,5 @@ export class DirectoryComponent implements OnInit {
       }
     }
     this.isDragging = false;
-  }
-
-  deleteFile(file: IBinaryFile) {
-    this.dir.deleteFile(file);
-  }
-
-  deleteSelf(dir: Directory) {
-    this.dirDeleted.emit(dir);
-  }
-
-  addDirectory(dir: Directory) {
-    console.log("add new", dir);
   }
 }

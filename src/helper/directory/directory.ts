@@ -20,8 +20,8 @@ export class Directory implements IDirectory {
 
   private _parent: IDirectory;
 
-  public get parent(): IDirectory {
-    return this._parent;
+  public get parent(): Directory {
+    return this._parent as Directory;
   }
 
   public set parent(parent: IDirectory) {
@@ -60,13 +60,36 @@ export class Directory implements IDirectory {
     }
   }
 
+  public addDirectory(dir: Directory): void {
+    if (this.subDirectories.find(d => d.name === dir.name) === undefined) {
+      dir.parent = this;
+      this.subDirectories.push(dir);
+      this._subDirectories = this.subDirectories.sort((a: IDirectory, b: IDirectory) => {
+        if (a.name < b.name) { return -1; }
+        if (a.name > b.name) { return 1; }
+        return 0;
+      });
+      this.save();
+    }
+  }
+
   public deleteFile(file: IBinaryFile): void {
     this._files = this.files.filter(f => f.name !== file.name);
     this.save();
   }
 
+
+  public deleteSubDirectory(dir: Directory): void {
+    this._subDirectories = this.subDirectories.filter(d => d.name !== dir.name);
+    this.save();
+  }
+
   public save() {
-    db.saveDirectory(this.toDb());
+    if (this.parent !== this) {
+      this.parent.save();
+    } else {
+      db.saveDirectory(this.toDb());
+    }
   }
 
   private toDb(): DbDirectory {

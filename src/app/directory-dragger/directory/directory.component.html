@@ -3,11 +3,12 @@
     <i class="bi bi-folder mx-2"></i>
     <h6>{{dir.name}}</h6>
     <div class="btn-group">
-      <app-add-directory (click)="addDirectory($event)" class="btn"></app-add-directory>
+      <app-add-directory (added)="addDirectory($event)" class="btn"></app-add-directory>
       <button class="btn" type="button" (click)="deleteSelf(dir)">X</button>
     </div>
   </div>
   <div class="card-body d-flex flex-wrap justify-content-start">
+    <app-directory *ngFor="let sub of subDirectories" [dir]="sub" (dirDeleted)="deleteDir(sub)"></app-directory>
     <app-file-container *ngFor="let file of dir.files" [file]="file" (deleted)="deleteFile(file)" class="m-1"></app-file-container>
   </div>
 </div>
