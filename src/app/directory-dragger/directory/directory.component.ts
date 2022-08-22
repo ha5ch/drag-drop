@@ -65,7 +65,7 @@ export class DirectoryComponent implements OnInit {
       function concatName() {
         let d = sub as Directory;
         let name = '';
-        while (d.parent && d.parent !== d) {
+        while (d.parent && d.parent !== d && d.parent !== dir) {
           name = `${d.parent.name}/${name}`;
           d = d.parent;
         }
@@ -91,7 +91,7 @@ export class DirectoryComponent implements OnInit {
       .then(blob => {
         const a = document.createElement('a');
         a.href = URL.createObjectURL(blob);
-        a.download = dir.name + '.zip';
+        a.download = `${dir.name}.zip`;
         a.click();
         URL.revokeObjectURL(a.href);
         a.remove();

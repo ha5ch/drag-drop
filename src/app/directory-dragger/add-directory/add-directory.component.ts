@@ -3,10 +3,11 @@ import { Directory } from '../../../helper/directory/directory';
 
 @Component({
   selector: 'app-add-directory',
-  template: '<span>{{text}}</span>',
+  template: '<i class="bi {{icon}}"></i>\n',
 })
 export class AddDirectoryComponent {
-  @Input() text: string = `+`;
+  // see https://icons.getbootstrap.com/ for icons
+  @Input() icon: string = `bi-folder-plus`;
   @Output() added: EventEmitter<Directory>;
 
   constructor(private self: ElementRef) {
