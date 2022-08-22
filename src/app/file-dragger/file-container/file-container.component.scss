@@ -2,4 +2,10 @@ button.delete {
   z-index: 99;
   top: 0;
   right: 0;
+  border: unset;
+
+  &:hover {
+    border: unset;
+    color: red;
+  }
 }
