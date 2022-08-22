@@ -3,9 +3,10 @@
     <i class="bi bi-folder mx-2"></i>
     <h6>{{dir.name}}</h6>
     <div class="btn-group">
-      <button class="btn" type="button" (click)="download(dir)">dl</button>
-      <app-add-directory (added)="addDirectory($event)" class="btn"></app-add-directory>
-      <button class="btn" type="button" (click)="deleteSelf(dir)">X</button>
+      <button class="btn" type="button" (click)="download(dir)" title="download folder"><i class="bi bi-download"></i>
+      </button>
+      <app-add-directory (added)="addDirectory($event)" class="btn" title="add folder"></app-add-directory>
+      <button class="btn" type="button" (click)="deleteSelf(dir)" title="delete folder"><i class="bi bi-trash"></i></button>
     </div>
   </div>
   <div class="card-body d-flex flex-wrap justify-content-start">

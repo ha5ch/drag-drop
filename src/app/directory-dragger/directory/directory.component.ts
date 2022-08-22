@@ -62,12 +62,23 @@ export class DirectoryComponent implements OnInit {
 
     dir.files.forEach(addFile);
     dir.subDirectories.forEach(function addSub(sub) {
-      // TODO: Refactor! Only works for 1 layer of directories!!
-      zip.folder(sub.name);
+      function concatName() {
+        let d = sub as Directory;
+        let name = '';
+        while (d.parent && d.parent !== d) {
+          name = `${d.parent.name}/${name}`;
+          d = d.parent;
+        }
+        name += sub.name;
+        return name;
+      }
+
+      const name = concatName();
+      zip.folder(name);
       sub.subDirectories.forEach(addSub);
       sub.files.map(f => {
         return {
-          name: `${sub.name}/${f.name}`,
+          name: `${name}/${f.name}`,
           binary: f.binary,
           content: f.content,
           isBinary: f.isBinary,
